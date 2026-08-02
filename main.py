@@ -3,20 +3,21 @@ import json
 from urllib.request import urlopen
 from urllib.error import URLError, HTTPError
 
-try:
-    user_input = sys.argv[1]
-    with urlopen(f'https://api.github.com/users/{user_input}/events') as response:
-        pushes = []
-        username = ''
+class Main:
+    def search(self):
+        try:
+            self.username = sys.argv[1]
+        except IndexError:
+            self.username = input('enter username: ')
 
-        for entry in json.loads(response.read()):
-            if entry['type'] == 'PushEvent':
-                pushes.append(entry)
+        try:
+            with urlopen(f'https://api.github.com/users/{self.username}/events') as response:
+                for event in json.loads(response.read()):
+                    print(event['type'])
+        except Exception as exception:
+            print(exception)
 
-        print(f'{user_input} has {len(pushes)} pushes')
-except IndexError:
-    print('ERROR: enter a username next to the filename of the program when running it.')
-except HTTPError as exception:
-    print(exception)
-except URLError as exception:
-    print(exception)
+main = Main()
+
+while True:
+    main.search()
