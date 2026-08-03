@@ -20,7 +20,8 @@ class Main:
         except Exception as exception:
             print(exception)
 
-main = Main()
+if __name__ == '__main__':
+    main = Main()
 
-while True:
-    main.search()
+    while True:
+        main.search()
