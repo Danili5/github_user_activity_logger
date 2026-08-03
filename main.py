@@ -3,6 +3,9 @@ import json
 from urllib.request import urlopen
 
 class Main:
+    def __init__(self):
+        self.events = {}
+
     def search(self):
         try:
             self.username = sys.argv[1]
@@ -12,11 +15,7 @@ class Main:
         try:
             with urlopen(f'https://api.github.com/users/{self.username}/events') as response:
                 for entry in json.loads(response.read()):
-                    user = entry['actor']['login']
-                    event = entry['type'].split('Event')[0].lower()
-                    repository = entry['repo']['name']
-
-                    print(f'> {user} has a {event} event to {repository}')
+                    pass
         except Exception as exception:
             print(exception)
 
