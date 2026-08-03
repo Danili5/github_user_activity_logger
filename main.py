@@ -12,8 +12,12 @@ class Main:
 
         try:
             with urlopen(f'https://api.github.com/users/{self.username}/events') as response:
-                for event in json.loads(response.read()):
-                    print(event['type'])
+                for entry in json.loads(response.read()):
+                    user = entry['actor']['login']
+                    event = entry['type'].split('Event')[0].lower()
+                    repository = entry['repo']['name']
+
+                    print(f'> {user} has a {event} event to {repository}')
         except Exception as exception:
             print(exception)
 
